@@ -13,26 +13,27 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Controller
 public class HomeController {
 
+    @Autowired
     private UserServiceImpl mUserService;
 
-    @Autowired
+    /*@Autowired
     public HomeController(UserServiceImpl userService) {
         mUserService = userService;
-    }
+    }*/
 
     @GetMapping("/")
     public String home1() {
-        return "/home";
+        return "home";
     }
 
     @GetMapping("/home")
     public String home() {
-        return "/home";
+        return "home";
     }
 
     @GetMapping("/login")
     public String login() {
-        return "/login";
+        return "login";
     }
 
     @GetMapping("/403")

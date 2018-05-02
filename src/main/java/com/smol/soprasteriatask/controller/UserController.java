@@ -1,8 +1,6 @@
 package com.smol.soprasteriatask.controller;
 
-import com.smol.soprasteriatask.model.DetailsDTO;
 import com.smol.soprasteriatask.model.DetailsNewDTO;
-import com.smol.soprasteriatask.model.SaveSkillsRequest;
 import com.smol.soprasteriatask.model.SkillDTO;
 import com.smol.soprasteriatask.service.SkillsService;
 import com.smol.soprasteriatask.service.UserService;
@@ -18,15 +16,16 @@ import java.util.List;
 @Controller
 public class UserController {
 
-
+    @Autowired
     private UserService mUserService;
+    @Autowired
     private SkillsService mSkillsService;
 
-    @Autowired
+    /*@Autowired
     public UserController(UserService userService, SkillsService skillsService) {
         mUserService = userService;
         mSkillsService = skillsService;
-    }
+    }*/
 
     //creating useful allSkills list attribute
     @ModelAttribute("allSkills")

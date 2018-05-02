@@ -15,6 +15,7 @@ import java.util.List;
 @Controller
 public class SkillsController {
 
+    @Autowired
     private SkillsService mSkillsService;
 
     @Autowired
@@ -25,6 +26,13 @@ public class SkillsController {
     //creating useful allSkills list attribute
     @ModelAttribute("allSkills")
     public List<SkillDTO> getAllSkills() {
+
+        //temporary if API not working:
+        /*List<SkillDTO> skills = new ArrayList<>();
+        skills.add(new SkillDTO(1, "Jakas"));
+        skills.add(new SkillDTO(2, "Jakas2"));
+        return skills;*/
+
         return mSkillsService.getAllSkills();
     }
 

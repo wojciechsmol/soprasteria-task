@@ -34,6 +34,7 @@ public class SkillsServiceImpl implements SkillsService {
                     HttpMethod.GET, SecurityService.getStandardStringHttpEntity(), new ParameterizedTypeReference<List<SkillDTO>>() {});
         } catch (Exception eek) {
             System.out.println("** Exception: " + eek.getMessage());
+            return null;
         }
 
         //return List<SkillDTO>
