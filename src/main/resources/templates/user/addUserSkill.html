@@ -1,0 +1,65 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Add User Skill</title>
+
+    <div th:replace="fragments/header :: header-css"/>
+
+</head>
+<body>
+
+<div th:replace="fragments/header :: header"/>
+
+
+<div class="row">
+    <div class="col-md-6 col-md-offset-3">
+
+
+        <div th:if="${param.added}">
+            <div class="alert alert-success">
+                Skill has been added.
+            </div>
+        </div>
+        <form class="form-horizontal" role="form" th:object="${skillDTO}" th:action="@{/addUserSkill?added}" method="post">
+            <fieldset>
+
+                <!-- Form Name -->
+                <legend>Add Skill To The User</legend>
+
+                <!-- Select Basic -->
+                <div class="form-group">
+                    <label class="col-md-4 control-label" >Select Skill</label>
+                    <div class="col-md-4">
+                        <select th:field="*{id}" >
+                            <option th:each="skill : ${allSkills}" th:value="${skill.id}" th:text="${skill.skillName}">Skill</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-sm-offset-0 col-sm-10">
+                        <div class="pull-right">
+                            <a th:href="@{/userSkills}" class="btn btn-primary" role="button"><i
+                                    class="glyphicon glyphicon-triangle-left"></i> Cancel</a>
+                            <button type="submit" class="btn btn-primary">Add</button>
+                        </div>
+                    </div>
+                </div>
+
+            </fieldset>
+        </form>
+
+
+        <div class="container">
+            Can't find desired skill?: <a th:href="@{/addNewSkill}" class="btn btn-primary" role="button">Add New Skill to the list</a>
+        </div>
+
+
+    </div><!-- /.col-lg-12 -->
+</div><!-- /.row -->
+
+
+<div th:replace="fragments/footer :: footer"/>
+
+</body>
+</html>
