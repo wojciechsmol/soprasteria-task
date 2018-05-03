@@ -19,7 +19,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
     @Autowired
     RestTemplate mRestTemplate;
 
-    @Value("${url.basic")
+    @Value("${url.basic}")
     private String basicUrl;
 
     //Own Authenticate procedure
@@ -53,7 +53,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         try {
             HttpHeaders headers = SecurityService.createHeaders(user, password);
             HttpEntity<String> entity = new HttpEntity<String>(headers);
-            response = mRestTemplate.exchange(basicUrl, HttpMethod.GET, entity, String.class);
+            response = mRestTemplate.exchange(basicUrl + "/skills", HttpMethod.GET, entity, String.class);
         } catch (Exception eek) {
             System.out.println("** Exception: " + eek.getMessage());
             return false;
