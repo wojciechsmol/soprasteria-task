@@ -22,12 +22,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private LoggingAccessDeniedHandler accessDeniedHandler;
 
-    /*//----------------------------------------------------------------------
+    //----------------------------------------------------------------------
     // Comment this block of code if you want to use authentication without
     // external API
     // START:
     //------------------------------------------------------------------------
-    *//*@Autowired
+
+    @Autowired
     private CustomAuthenticationProvider authProvider;
 
 
@@ -37,7 +38,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             AuthenticationManagerBuilder auth) throws Exception {
 
         auth.authenticationProvider(authProvider);
-    }*//*
+    }
 
     //-----------------------------------------------------------------------
     // END
@@ -45,15 +46,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 
     //--------------------------------------------------------------------------
-    // Uncomment this method if you want to use authentication through hard-coded user
+    // Uncomment method below if you want to use authentication through hard-coded user
     // username: user , pass: pwd
     //-----------------------------------------------------------------------------------
 
-    @Override
+    /*@Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.inMemoryAuthentication()
                 .withUser("user").password("{noop}pwd").roles("USER");
-    }
+    }*/
 
 
     @Override
