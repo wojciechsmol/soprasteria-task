@@ -30,33 +30,38 @@ public class SkillsServiceImpl implements SkillsService {
 
         ResponseEntity<List<SkillDTO>> response = null;
         try {
+            // GET -> http://urlAPI/skills
             response = mRestTemplate.exchange(skillsUrl,
-                    HttpMethod.GET, SecurityService.getStandardStringHttpEntity(), new ParameterizedTypeReference<List<SkillDTO>>() {});
+                    HttpMethod.GET, SecurityService.getStandardStringHttpEntity(), new ParameterizedTypeReference<List<SkillDTO>>() {
+                    });
         } catch (Exception eek) {
             System.out.println("** Exception: " + eek.getMessage());
-            return null;
+            return null; //return null if sth went wrong
         }
 
-        //return List<SkillDTO>
         return response.getBody();
     }
 
+    //Returns true if the operation was successfull (status code was 201)
     @Override
-    public void addNewSkill(SkillNewDTO skillNewDTO) {
+    public boolean addNewSkill(SkillNewDTO skillNewDTO) {
 
         try {
             //making the entity with the SkillNewDTO we want to POST
             HttpEntity<SkillNewDTO> entity = new HttpEntity<>(skillNewDTO, SecurityService.createHeaders(
                     SecurityConfig.getCurrentUsername(), SecurityConfig.getCurrentPassword()
             ));
+            // POST -> http://urlAPI/skills
             ResponseEntity<String> response = mRestTemplate.exchange(skillsUrl,
                     HttpMethod.POST, entity, String.class);
             if (response.getStatusCode().value() != 201) {
                 throw new HTTPException(response.getStatusCode().value());
             }
+            return true; //return true if everything went well
 
         } catch (Exception eek) {
             System.out.println("** Exception: " + eek.getMessage());
+            return false; //return false if sth went wrong
         }
     }
 

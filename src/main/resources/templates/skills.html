@@ -15,11 +15,18 @@
 
 
         <h2>Skills</h2>
-        <div class="container">
+
+        <div th:if="${apiRespondedCorrectly} == false">
+            <div class="alert alert-danger">
+                There was an error (external API might not respond).
+            </div>
+        </div>
+
+        <div th:if="${apiRespondedCorrectly} == true" class="container">
             <a th:href="@{/addNewSkill}" class="btn btn-primary" role="button">Add New Skill</a>
         </div>
         <br/>
-        <table class="table table-hover">
+        <table th:if="${apiRespondedCorrectly} == true" class="table table-hover">
             <thead>
             <tr>
                 <th>id</th>
@@ -34,8 +41,16 @@
             </tbody>
         </table>
 
-        <div class="container">
+        <div th:if="${apiRespondedCorrectly} == true" class="container">
             <a th:href="@{/addNewSkill}" class="btn btn-primary" role="button">Add New Skill</a>
+        </div>
+        <div class="form-group" th:if="${apiRespondedCorrectly} == false">
+            <div class="col-sm-offset-2 col-sm-10">
+                <div class="pull-right">
+                    <a th:href="@{/}" class="btn btn-primary" role="button"><i
+                            class="glyphicon glyphicon-triangle-left"></i> Back To Homepage</a>
+                </div>
+            </div>
         </div>
     </div>
 

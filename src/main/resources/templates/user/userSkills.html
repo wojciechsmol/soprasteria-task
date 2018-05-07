@@ -15,7 +15,12 @@
 
         <h2>User Skills</h2>
 
-        <table class="table table-hover">
+        <div th:if="${apiRespondedCorrectly} == false">
+            <div class="alert alert-danger">
+                There was an error (external API might not respond).
+            </div>
+        </div>
+        <table th:if="${apiRespondedCorrectly} == true" class="table table-hover">
             <thead>
             <tr>
                 <th>id</th>
@@ -30,8 +35,17 @@
             </tbody>
         </table>
 
-        <div class="container">
+        <div th:if="${apiRespondedCorrectly} == true" class="container">
             <a th:href="@{/addUserSkill}" class="btn btn-primary" role="button">Add New Skill</a>
+        </div>
+
+        <div th:if="${apiRespondedCorrectly} == false" class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <div class="pull-right">
+                    <a th:href="@{/}" class="btn btn-primary" role="button"><i
+                            class="glyphicon glyphicon-triangle-left"></i> Back To Homepage</a>
+                </div>
+            </div>
         </div>
     </div>
 

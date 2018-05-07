@@ -15,13 +15,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private static String currentUsername;
     private static String currentPassword;
 
+    //current user id
     @Value("${user.id")
     private static String currentUserId;
 
     @Autowired
     private LoggingAccessDeniedHandler accessDeniedHandler;
 
-    @Autowired
+    /*//----------------------------------------------------------------------
+    // Comment this block of code if you want to use authentication without
+    // external API
+    // START:
+    //------------------------------------------------------------------------
+    *//*@Autowired
     private CustomAuthenticationProvider authProvider;
 
 
@@ -31,16 +37,23 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             AuthenticationManagerBuilder auth) throws Exception {
 
         auth.authenticationProvider(authProvider);
-    }
+    }*//*
+
+    //-----------------------------------------------------------------------
+    // END
+    //------------------------------------------------------------------------*/
 
 
-    //Temporary if API not working. Authentication through:  user:pwd;
-    /*@Override
+    //--------------------------------------------------------------------------
+    // Uncomment this method if you want to use authentication through hard-coded user
+    // username: user , pass: pwd
+    //-----------------------------------------------------------------------------------
+
+    @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.inMemoryAuthentication()
                 .withUser("user").password("{noop}pwd").roles("USER");
-    }*/
-
+    }
 
 
     @Override

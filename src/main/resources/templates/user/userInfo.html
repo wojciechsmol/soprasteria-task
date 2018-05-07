@@ -13,12 +13,18 @@
 <div class="row">
     <div class="col-md-6 col-md-offset-3">
 
-        <div th:if="${param.save}">
+        <div th:if="${changesSavedCorrectly} == true">
             <div class="alert alert-success">
                 Changes have been saved.
             </div>
         </div>
-        <form class="form-horizontal" role="form" th:object="${detailsNewDTO}" th:action="@{/userInfo?save}"
+        <div th:if="${apiRespondedCorrectly} == false">
+            <div class="alert alert-danger">
+                There was an error (external API might not respond).
+            </div>
+        </div>
+        <form th:if="${apiRespondedCorrectly} == true" class="form-horizontal" role="form" th:object="${detailsNewDTO}"
+              th:action="@{/userInfo}"
               method="post">
             <fieldset>
 
@@ -59,7 +65,7 @@
 
                 <!-- Select Basic -->
                 <div class="form-group">
-                    <label class="col-sm-2 control-label" >Year Of Study</label>
+                    <label class="col-sm-2 control-label">Year Of Study</label>
                     <div class="col-md-4">
                         <select th:field="*{yearOfStudy}" id="selectbasic" name="selectbasic" class="form-control">
                             <option value="1">1</option>

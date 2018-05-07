@@ -9,5 +9,6 @@ import java.util.List;
 public interface SkillsService {
 
     List<SkillDTO> getAllSkills();
-    void addNewSkill(SkillNewDTO skillNewDTO);
+
+    boolean addNewSkill(SkillNewDTO skillNewDTO);
 }

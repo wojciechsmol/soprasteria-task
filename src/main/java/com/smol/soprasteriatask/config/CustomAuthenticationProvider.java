@@ -13,6 +13,11 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 
+//-------------------------------------------------------------------------------------
+// CustomAuthenticationProvider - this class provides custom authentication
+// The user is authenticated as soon as it gets authenticated by the external API
+//---------------------------------------------------------------------------------------
+
 @Component
 public class CustomAuthenticationProvider implements AuthenticationProvider {
 
@@ -44,8 +49,10 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         }
     }
 
-    //Use GET method with credentials set during Sign In to determine if the user
-    // can be authenticated against external API
+    // ------------------------------------------------------------------------------------
+    // This method checks if the user credentials are sufficient for authentication against
+    // external API by doing some basic query
+    //---------------------------------------------------------------------------------------
 
     private boolean shouldAuthenticateAgainstAPI(String user, String password) {
 
@@ -53,10 +60,14 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         try {
             HttpHeaders headers = SecurityService.createHeaders(user, password);
             HttpEntity<String> entity = new HttpEntity<String>(headers);
+
+            //----------------------------------------------------------------------------
+            // We make some query with basic credentials : GET -> http://apiURL/skills
+            //-----------------------------------------------------------------------------
             response = mRestTemplate.exchange(basicUrl + "/skills", HttpMethod.GET, entity, String.class);
         } catch (Exception eek) {
             System.out.println("** Exception: " + eek.getMessage());
-            return false;
+            return false; // if sth went wrong return false
         }
 
         //return true if authenticated

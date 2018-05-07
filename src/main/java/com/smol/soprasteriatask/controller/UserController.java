@@ -1,7 +1,9 @@
 package com.smol.soprasteriatask.controller;
 
+import com.smol.soprasteriatask.model.DetailsDTO;
 import com.smol.soprasteriatask.model.DetailsNewDTO;
 import com.smol.soprasteriatask.model.SkillDTO;
+import com.smol.soprasteriatask.model.UserCreatedDTO;
 import com.smol.soprasteriatask.service.SkillsService;
 import com.smol.soprasteriatask.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,46 +23,76 @@ public class UserController {
     @Autowired
     private SkillsService mSkillsService;
 
-    /*@Autowired
-    public UserController(UserService userService, SkillsService skillsService) {
-        mUserService = userService;
-        mSkillsService = skillsService;
-    }*/
-
-    //creating useful allSkills list attribute
-    @ModelAttribute("allSkills")
-    public List<SkillDTO> getAllSkills() {
-        return mSkillsService.getAllSkills();
-    }
+    //-------------------------------------------------------------------------------------------------------
+    // Controllers for: /userInfo - displays info about user.
+    // NOTE: it displays only info about user whos ID (currentUserID) set in the app (despite which user is logged in)
+    // It is due to limitations of the external API
+    //----------------------------------------------------------------------------------------------------------
 
     @GetMapping("/userInfo")
     public String getUserInfoPage(Model model) {
 
+        List<SkillDTO> allSkills = mSkillsService.getAllSkills();
+        DetailsNewDTO detailsNewDTO = mUserService.getCurrentUserDetails();
+
+        // determines if the error message and form should be displayed
+        boolean apiRespondedCorrectly = (allSkills != null) && (detailsNewDTO != null);
+
+        model.addAttribute("apiRespondedCorrectly", apiRespondedCorrectly);
+
         //passing current user details so that they can be seen before changing
-        model.addAttribute("detailsNewDTO", mUserService.getCurrentUserDetails());
+        model.addAttribute("detailsNewDTO", detailsNewDTO);
 
         return "/user/userInfo";
     }
 
 
     @PostMapping("/userInfo")
-    public String saveUserInfo(@ModelAttribute DetailsNewDTO detailsNewDTO) {
+    public String saveUserInfo(@ModelAttribute DetailsNewDTO detailsNewDTO, Model model) {
 
-        mUserService.saveCurrentUserDetails(detailsNewDTO);
+        boolean changesSavedCorrectly = mUserService.saveCurrentUserDetails(detailsNewDTO);
+        model.addAttribute(changesSavedCorrectly);
+        model.addAttribute("apiRespondedCorrectly", true);
+
         return "/user/userInfo";
     }
+
+    //----------------------------------------------------------------------------------------------------
+    // Controller for: /userSkills - displays user skills.
+    // NOTE: It it displays only skills about user whos ID (currentUserID) set in the app (despite which user is logged in)
+    // It is due to limitations of the external API
+    //---------------------------------------------------------------------------------------------------------
 
     @GetMapping("/userSkills")
     public String getUserSkillsPage(Model model) {
 
+        List<SkillDTO> userSkills = mUserService.getCurrentUserSkills();
+
+        // determines if the error message should be displayed
+        boolean apiRespondedCorrectly = userSkills != null;
+
         //passing user skills for displaying
-        model.addAttribute("userSkills", mUserService.getCurrentUserSkills());
+        model.addAttribute("userSkills", userSkills);
+
+        model.addAttribute("apiRespondedCorrectly", apiRespondedCorrectly);
 
         return "/user/userSkills";
     }
 
+    //----------------------------------------------------------------------------------------------------
+    // Controllers for : /addUserSkill - lets add a skill to the user whos ID (currentUserID) is set in the app
+    //------------------------------------------------------------------------------------------------------
+
     @GetMapping("/addUserSkill")
     public String getAddUserSkillPage(Model model) {
+
+        List<SkillDTO> allSkills = mSkillsService.getAllSkills();
+
+        // determines if the error message should be displayed
+        boolean apiRespondedCorrectly = allSkills != null;
+
+        model.addAttribute("apiRespondedCorrectly", apiRespondedCorrectly);
+        model.addAttribute("allSkills", allSkills);
 
         //passing empty SkillDTO object for populating id field
         model.addAttribute("skillDTO", new SkillDTO());
@@ -69,12 +101,41 @@ public class UserController {
     }
 
     @PostMapping("/addUserSkill")
-    public String saveUserSkill(@ModelAttribute SkillDTO skillDTO) {
+    public String saveUserSkill(@ModelAttribute SkillDTO skillDTO, Model model) {
 
-        mUserService.addSkillToCurrentUser(skillDTO.getId());
+        //determines if everything went well
+        boolean apiRespondedCorrectly = mUserService.addSkillToCurrentUser(skillDTO.getId());
+
+        model.addAttribute("apiRespondedCorrectly", apiRespondedCorrectly);
+
         return "/user/addUserSkill";
     }
 
+    //--------------------------------------------------------------------------
+    // Controllers for: /findUser
+    //---------------------------------------------------------------------------
+    @GetMapping("/findUser")
+    public String getFindUserPage(Model model) {
+
+        //passing empty DetailsDTOobject for populating the id field
+        model.addAttribute("detailsDTO", new DetailsDTO());
+        return "findUser";
+    }
+
+    @PostMapping("/findUser")
+    public String getResultPageFindUser(@ModelAttribute UserCreatedDTO userCreatedDTO, Model model) {
+
+        UserCreatedDTO foundUser = mUserService.findUserById(userCreatedDTO.getId());
+
+        //setting variable for determining about displaying alert and user info
+        // if foundUser = null -> found = false;
+        boolean found = foundUser != null;
+
+        model.addAttribute("found", found);
+        model.addAttribute("userCreatedDTO", foundUser);
+
+        return "findUserResults";
+    }
 
 
 }

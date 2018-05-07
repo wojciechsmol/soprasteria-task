@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
+
 @Component
 public class MyConfig {
 
@@ -16,6 +17,10 @@ public class MyConfig {
 
     @Bean
     public RestTemplate restTemplate(RestTemplateBuilder builder) {
-        return new RestTemplate();
+        return builder
+                .setReadTimeout(1300)
+                .setConnectTimeout(1300)  //in case external API doesn't work
+                .build();
     }
+
 }

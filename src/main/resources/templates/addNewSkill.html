@@ -15,12 +15,17 @@
     <div class="col-md-6 col-md-offset-3">
 
 
-        <div th:if="${param.added}">
+        <div th:if="${apiRespondedCorrectly} == true">
             <div class="alert alert-success">
                 Skill has been added.
             </div>
         </div>
-        <form class="form-horizontal" role="form" th:object="${skillNewDTO}" th:action="@{/addNewSkill?added}" method="post">
+        <div th:if="${apiRespondedCorrectly} == false">
+            <div class="alert alert-danger">
+                There was an error (external API might not respond).
+            </div>
+        </div>
+        <form class="form-horizontal" role="form" th:object="${skillNewDTO}" th:action="@{/addNewSkill}" method="post">
             <fieldset>
 
                 <!-- Form Name -->

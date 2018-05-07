@@ -10,8 +10,12 @@ import java.util.List;
 public interface UserService {
 
     UserCreatedDTO findUserById(String id);
+
     List<SkillDTO> getCurrentUserSkills();
-    void addSkillToCurrentUser(int skillId);
+
+    boolean addSkillToCurrentUser(int skillId);
+
     DetailsNewDTO getCurrentUserDetails();
-    void saveCurrentUserDetails(DetailsNewDTO details);
+
+    boolean saveCurrentUserDetails(DetailsNewDTO details);
 }

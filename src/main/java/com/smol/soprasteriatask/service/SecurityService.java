@@ -6,7 +6,9 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 
+//------------------------------------------------------------------
 // Some tools for making authenticated queries against external API
+//------------------------------------------------------------------
 public interface SecurityService {
 
     static HttpEntity<String> getStandardStringHttpEntity() {

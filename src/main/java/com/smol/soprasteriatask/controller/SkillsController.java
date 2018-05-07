@@ -18,30 +18,26 @@ public class SkillsController {
     @Autowired
     private SkillsService mSkillsService;
 
-    @Autowired
-    public SkillsController(SkillsService skillsService) {
-        mSkillsService = skillsService;
-    }
-
-    //creating useful allSkills list attribute
-    @ModelAttribute("allSkills")
-    public List<SkillDTO> getAllSkills() {
-
-        //temporary if API not working:
-        /*List<SkillDTO> skills = new ArrayList<>();
-        skills.add(new SkillDTO(1, "Jakas"));
-        skills.add(new SkillDTO(2, "Jakas2"));
-        return skills;*/
-
-        return mSkillsService.getAllSkills();
-    }
-
+    //----------------------------------------------------------------------------------
+    // Controller for: /skills
+    //----------------------------------------------------------------------------------
     @GetMapping("/skills")
-    public String getSkillsPage() {
+    public String getSkillsPage(Model model) {
+
+        List<SkillDTO> allSkills = mSkillsService.getAllSkills();
+
+        // determines if the error message should be displayed
+        boolean apiRespondedCorrectly = allSkills != null;
+
+        model.addAttribute("apiRespondedCorrectly", apiRespondedCorrectly);
+        model.addAttribute("allSkills", allSkills);
+
         return "skills";
     }
 
-
+    //----------------------------------------------------------------------------------
+    // Controllers for: /addNewSkill
+    //----------------------------------------------------------------------------------
     @GetMapping("/addNewSkill")
     public String getAddNewSkillPage(Model model) {
 
@@ -51,9 +47,13 @@ public class SkillsController {
     }
 
     @PostMapping("/addNewSkill")
-    public String saveNewSkill(@ModelAttribute SkillNewDTO skillNewDTO) {
+    public String saveNewSkill(@ModelAttribute SkillNewDTO skillNewDTO, Model model) {
 
-        mSkillsService.addNewSkill(skillNewDTO);
+        //determines if everything wen well
+        boolean apiRespondedCorrectly = mSkillsService.addNewSkill(skillNewDTO);
+
+        model.addAttribute("apiRespondedCorrectly", apiRespondedCorrectly);
+
         return "addNewSkill";
     }
 
