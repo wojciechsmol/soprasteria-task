@@ -56,7 +56,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .withUser("user").password("{noop}pwd").roles("USER");
     }*/
 
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http

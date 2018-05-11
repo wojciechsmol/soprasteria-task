@@ -2,10 +2,20 @@ package com.smol.soprasteriatask.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class UserNewDTO {
 
+    @NotEmpty
+    @Email
     private String email;
+
+    @NotNull
+    @Size(min=2, max=30)
     private String name;
 
     public UserNewDTO(String email, String name) {
