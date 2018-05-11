@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -31,9 +32,17 @@ public class UserController {
 
     @GetMapping("/userInfo")
     public String getUserInfoPage(Model model) {
-
         List<SkillDTO> allSkills = mSkillsService.getAllSkills();
         DetailsNewDTO detailsNewDTO = mUserService.getCurrentUserDetails();
+
+        //Can use code below if external API doesn't work:
+
+       /* List<SkillDTO> allSkills = new ArrayList<>();
+        allSkills.add(new SkillDTO(1, "Java"));
+        allSkills.add(new SkillDTO(2, "C++"));
+
+        DetailsNewDTO detailsNewDTO = new DetailsNewDTO("Informatyka", "Wojciech", "Smol", "Polsl", 3);
+        */
 
         // determines if the error message and form should be displayed
         boolean apiRespondedCorrectly = (allSkills != null) && (detailsNewDTO != null);
