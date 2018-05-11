@@ -28,7 +28,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     // START:
     //------------------------------------------------------------------------
 
-   /* @Autowired
+    @Autowired
     private CustomAuthenticationProvider authProvider;
 
 
@@ -39,22 +39,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         auth.authenticationProvider(authProvider);
     }
-*/
     //-----------------------------------------------------------------------
     // END
     //------------------------------------------------------------------------*/
 
 
     //--------------------------------------------------------------------------
-    // Uncomment method below if you want to use authentication through hard-coded user
+    // ***Uncomment method below if you want to use authentication through hard-coded user**
     // username: user , pass: pwd
     //-----------------------------------------------------------------------------------
 
-    @Override
+    /*@Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.inMemoryAuthentication()
                 .withUser("user").password("{noop}pwd").roles("USER");
-    }
+    }*/
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {

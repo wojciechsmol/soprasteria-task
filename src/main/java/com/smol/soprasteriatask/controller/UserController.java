@@ -35,14 +35,11 @@ public class UserController {
         List<SkillDTO> allSkills = mSkillsService.getAllSkills();
         DetailsNewDTO detailsNewDTO = mUserService.getCurrentUserDetails();
 
-        //Can use code below if external API doesn't work:
-
-       /* List<SkillDTO> allSkills = new ArrayList<>();
+        //***You can use the code below if external API doesn't work:***
+        /*List<SkillDTO> allSkills = new ArrayList<>();
         allSkills.add(new SkillDTO(1, "Java"));
-        allSkills.add(new SkillDTO(2, "C++"));
-
-        DetailsNewDTO detailsNewDTO = new DetailsNewDTO("Informatyka", "Wojciech", "Smol", "Polsl", 3);
-        */
+        allSkills.add(new SkillDTO(2, "C++"));*/
+        //DetailsNewDTO detailsNewDTO = new DetailsNewDTO("Informatyka", "Wojciech", "Smol", "Polsl", 3);
 
         // determines if the error message and form should be displayed
         boolean apiRespondedCorrectly = (allSkills != null) && (detailsNewDTO != null);
@@ -77,6 +74,11 @@ public class UserController {
 
         List<SkillDTO> userSkills = mUserService.getCurrentUserSkills();
 
+        //***You can use code below if API doesn't work***
+       /* List<SkillDTO> userSkills = new ArrayList<>();
+        userSkills.add(new SkillDTO(1, "C++"));
+        userSkills.add(new SkillDTO(2, "Java"));*/
+
         // determines if the error message should be displayed
         boolean apiRespondedCorrectly = userSkills != null;
 
@@ -96,6 +98,11 @@ public class UserController {
     public String getAddUserSkillPage(Model model) {
 
         List<SkillDTO> allSkills = mSkillsService.getAllSkills();
+
+        //***You can use the code below if external API doesn't work:***
+        /*List<SkillDTO> allSkills = new ArrayList<>();
+        allSkills.add(new SkillDTO(1, "Java"));
+        allSkills.add(new SkillDTO(2, "C++"));*/
 
         // determines if the error message should be displayed
         boolean apiRespondedCorrectly = allSkills != null;
@@ -135,6 +142,9 @@ public class UserController {
     public String getResultPageFindUser(@ModelAttribute UserCreatedDTO userCreatedDTO, Model model) {
 
         UserCreatedDTO foundUser = mUserService.findUserById(userCreatedDTO.getId());
+
+        //***You can use code below if API does not respond:***
+        //UserCreatedDTO foundUser = new UserCreatedDTO("my_mail@gmail.com", "2543", "Wojtek", "pass");
 
         //setting variable for determining about displaying alert and user info
         // if foundUser = null -> found = false;
